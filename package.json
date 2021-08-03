@@ -61,24 +61,12 @@
     "website": "vite",
     "build": "gulp build --gulpfile ./scripts/gulpfile-build.js --cwd ./"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-customizable"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "gitHooks": {
-    "commit-msg": "commitlint -e -V",
-    "pre-commit": "lint-staged"
-  },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "git add ."
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{d.ts,json,md}": [
+      "prettier --write"
     ]
   }
 }
