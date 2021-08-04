@@ -39,7 +39,7 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.DEPLOY_REACT_COMPONENT_KEY }}
         BRANCH: master
         FOLDER: dist
-        REPOSITORY_NAME: edisonLzy/em-react-component
+        REPOSITORY_NAME: edisonLzy/edisonLzy.github.io
         TARGET_FOLDER: em-react-component
 
       env:
