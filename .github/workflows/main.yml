@@ -29,7 +29,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 15.x
+    - name: Cache node modules
+      uses: actions/cache@v1
+      id: cache
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - name: yarn install, build:docs
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         yarn
         yarn build:doc
@@ -39,8 +48,8 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.DEPLOY_REACT_COMPONENT_KEY }}
         BRANCH: master
         FOLDER: dist
-        REPOSITORY_NAME: edisonLzy/static.github.io
-        TARGET_FOLDER: em-react-component
+        REPOSITORY_NAME: edisonLzy/edisonLzy.github.io
+        TARGET_FOLDER: react-component-docs
 
       env:
         CI: true
