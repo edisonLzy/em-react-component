@@ -37,10 +37,12 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-    - name: yarn install, build:docs
+    - name: yarn install
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         yarn
+    - name: build docs
+      run: 
         yarn build:doc
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
