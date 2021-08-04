@@ -1,14 +1,6 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports['default'] = Button;
-
-function Button() {
-  return /*#__PURE__*/ React.createElement(
-    'button',
-    null,
-    '\u6309\u94AE\u6D4B\u8BD5\u7EC4\u4EF6'
-  );
+import { jsx as _jsx } from "react/jsx-runtime";
+export default function Button() {
+  return /*#__PURE__*/_jsx("button", {
+    children: "\u6309\u94AE\u7EC4\u4EF6"
+  });
 }

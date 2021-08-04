@@ -1,15 +1,15 @@
-const path = require('path');
-const fs = require('fs-extra');
-const through2 = require('through2');
+import path from 'path';
+import fs from 'fs-extra';
+import through2 from 'through2';
 
-function getComponentName(file) {
+export function getComponentName(file: any) {
   const { history, base } = file;
-  const [, resultPath] = history;
-  const [, componentName] = resultPath.split(base)[1].split('/');
+  const [originPath] = history;
+  const [, componentName] = originPath.split(base)[1].split('/');
   return componentName;
 }
 
-exports.output = (dir) => {
+export const output = (dir: string) => {
   return through2.obj((file, encode, next) => {
     const { history, base, contents } = file;
     const [, resultPath] = history;
