@@ -29,11 +29,11 @@
     "commitlint-config-cz": "^0.13.2",
     "cross-env": "^7.0.3",
     "cz-customizable": "^6.3.0",
+    "dumi": "^1.0.13",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "fs-extra": "^10.0.0",
-    "dumi": "^1.0.13",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
@@ -78,5 +78,13 @@
     "build": "gulp build --gulpfile ./scripts/gulpfile-build.ts --cwd ./",
     "build:dev": "gulp dev --gulpfile ./scripts/gulpfile-build.ts --cwd ./",
     "build:doc": "dumi build"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{d.ts,json,md}": [
+      "prettier --write"
+    ]
   }
 }
