@@ -78,13 +78,5 @@
     "build": "gulp build --gulpfile ./scripts/gulpfile-build.ts --cwd ./",
     "build:dev": "gulp dev --gulpfile ./scripts/gulpfile-build.ts --cwd ./",
     "build:doc": "dumi build"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "*.{d.ts,json,md}": [
-      "prettier --write"
-    ]
   }
 }
