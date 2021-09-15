@@ -1,5 +1,5 @@
 {
-  "name": "@em-react-component/em-button",
+  "name": "@em-react-component/em-wave",
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Evanzyli <656603136@qq.com>",
@@ -19,12 +19,6 @@
     "registry": "https://registry.npm.taobao.org/"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
-    "classnames": "^2.3.1"
-  },
-  "devDependencies": {
-    "@types/classnames": "^2.3.1"
+    "build:type": "tsc --noEmit"
   }
 }

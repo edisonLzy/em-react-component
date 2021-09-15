@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import Button from '@em-react-component/em-button';
-import '@em-react-component/em-button/lib/style/index.css';
+
+import Button from '../../packages/em-button/src';
+import Wave from '../../packages/em-wave/src';
+import '../../packages/styles/index.less';
 function App() {
   const [count, setCount] = useState(0);
 
-  return <Button></Button>;
+  return (
+    <Wave>
+      <Button type="primary">按钮</Button>
+    </Wave>
+  );
 }
 
 export default App;
