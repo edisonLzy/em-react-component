@@ -1,0 +1,36 @@
+
+@click-animating: ~"[@{em-prefix}-click-animating='true']";
+
+@click-animating-with-after: ~'@{click-animating}::after';
+
+[em-click-animating='true'] {
+  position: relative;
+}
+@{click-animating-with-after} {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 var(--click-wave-color);
+  opacity: 0.2;
+  animation: fadeEffect 2s @ease-out-circ, waveEffect 0.4s @ease-out-circ;
+  animation-fill-mode: forwards;
+  content: '';
+  pointer-events: none;
+}
+
+@keyframes waveEffect {
+  100% {
+    box-shadow: 0 0 0 @wave-animation-width var(--click-wave-color);
+  }
+}
+
+@keyframes fadeEffect {
+  100% {
+    opacity: 0;
+  }
+}
+

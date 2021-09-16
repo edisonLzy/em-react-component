@@ -36,6 +36,7 @@ export default class Wave extends Component {
   waveColor = '';
   internalClickTimer = -1;
   pseudoStyleEl!: HTMLStyleElement;
+  attributeName = this.getAttributeName();
   private instance?: {
     cancel: () => void;
   };
@@ -48,7 +49,7 @@ export default class Wave extends Component {
     this.instance = this.bindAnimationEvent(node);
   }
   onClick(node: HTMLElement, waveColor: string) {
-    const attributeName = this.getAttributeName();
+    const attributeName = this.attributeName;
     node.setAttribute(attributeName, 'true');
     const animationSelector = `[${attributeName}='true']::after{
     --click-wave-color: ${waveColor};
@@ -61,7 +62,20 @@ export default class Wave extends Component {
       body.append(pseudoStyleEl);
     }
     this.pseudoStyleEl = pseudoStyleEl;
+    ['transition', 'animation'].forEach((name) => {
+      node.addEventListener(`${name}start`, this.onTransitionStart);
+      node.addEventListener(`${name}end`, this.onTransitionEnd);
+    });
   }
+  onTransitionStart = (e: any) => {
+    console.log('xxx');
+  };
+  onTransitionEnd = (e: any) => {
+    if (!e || e.animationName !== 'fadeEffect') {
+      return;
+    }
+    this.resetEffect(e.target);
+  };
   bindAnimationEvent = (node: HTMLElement) => {
     if (isUnusedAble(node)) return;
     const onClick = (e: MouseEvent) => {
@@ -71,6 +85,7 @@ export default class Wave extends Component {
       ) {
         return;
       }
+      this.resetEffect(node);
       const waveColor = (this.waveColor = getWaveColor(node));
       this.onClick(node, waveColor);
     };
@@ -79,6 +94,16 @@ export default class Wave extends Component {
       cancel: () => {},
     };
   };
+  resetEffect(node: HTMLElement) {
+    node.setAttribute(this.attributeName, 'false');
+    if (this.pseudoStyleEl) {
+      this.pseudoStyleEl.innerHTML = '';
+    }
+    ['transition', 'animation'].forEach((name) => {
+      node.removeEventListener(`${name}start`, this.onTransitionStart);
+      node.removeEventListener(`${name}end`, this.onTransitionEnd);
+    });
+  }
   renderWave() {
     const { children } = this.props;
     return children;

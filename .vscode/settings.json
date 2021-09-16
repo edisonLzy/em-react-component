@@ -3,5 +3,6 @@
         "esbuild",
         "gulpfile",
         "vite"
-    ]
+    ],
+    "compile-hero.disable-compile-files-on-did-save-code": true
 }
