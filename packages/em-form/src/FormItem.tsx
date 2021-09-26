@@ -1,4 +1,13 @@
-import { ReactElement, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  PropsWithChildren,
+  isValidElement,
+  cloneElement,
+} from 'react';
 import formContext from './formContext';
 export interface ValidatorRule {
   message?: string | ReactElement;
@@ -50,7 +59,8 @@ const FormItem = ({
   trigger = 'onChange',
   validateTrigger = 'onChange',
   rule,
-}: FormItemProps) => {
+  children,
+}: PropsWithChildren<FormItemProps>) => {
   const formInstance = useContext(formContext);
   const [, forceUpdate] = useState({});
   const { registerValidateFields, dispatch, unRegisterValidate } = formInstance;
@@ -72,7 +82,55 @@ const FormItem = ({
       name && unRegisterValidate(name);
     };
   }, [name, onStoreChange]);
+  // 将表单控件受控
+  const getControlled = (child: ReactElement) => {
+    const mergeChildrenProps = { ...child.props };
+    if (!name) return mergeChildrenProps;
+    /* 改变表单单元项的值 */
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      /* 设置表单的值 */
+      dispatch({
+        type: 'setFieldsValue',
+        payload: [name, value],
+      });
+    };
+    mergeChildrenProps[trigger] = handleChange;
 
-  return <h1>aa</h1>;
+    if (required || rule) {
+      /* 验证表单单元项的值 */
+      mergeChildrenProps[validateTrigger] = (
+        e: React.ChangeEvent<HTMLInputElement>
+      ) => {
+        /* 当改变值和验证表单，用统一一个事件 */
+        if (validateTrigger === trigger) {
+          handleChange(e);
+        }
+        /* 触发表单验证 */
+        dispatch({ type: 'validateFieldValue', payload: name });
+      };
+    }
+
+    mergeChildrenProps['value'] = dispatch({
+      type: 'getFieldValue',
+      payload: name,
+    });
+    return mergeChildrenProps;
+  };
+
+  let renderChildren;
+  if (isValidElement(children)) {
+    /* 获取 | 合并 ｜ 转发 | =>  props  */
+    renderChildren = cloneElement(children, getControlled(children));
+  } else {
+    renderChildren = children;
+  }
+
+  return (
+    <label>
+      <span>{label}:</span>
+      {renderChildren}
+    </label>
+  );
 };
 export default FormItem;

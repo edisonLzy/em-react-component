@@ -1,3 +1,2 @@
-export default function Form() {
-  return <h1>下拉啊组件</h1>;
-}
+import { default as InternalForm, FormProps } from './Form';
+import FormItem from './FormItem';
