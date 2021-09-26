@@ -71,9 +71,13 @@ export default class FormStore<T extends Record<string, unknown> = {}> {
    * @param control
    * @param model
    */
-  registerValidateFields(name: keyof T, control: Controller, model: Validate) {
+  registerValidateFields(
+    name: keyof T,
+    control: Controller,
+    model: Partial<Validate>
+  ) {
     if (this.defaultFormValue[name]) model.value = this.defaultFormValue[name];
-    const validate = FormStore.createValidate(model);
+    const validate = FormStore.createValidate(model as Validate);
     this.model[name] = validate;
     this.control[name] = control;
   }
@@ -201,7 +205,7 @@ export default class FormStore<T extends Record<string, unknown> = {}> {
     callback(status);
   }
   /* 提交表单 */
-  submit(cb: ValidateCallback) {
+  submit(cb?: ValidateCallback) {
     this.validateFields((res) => {
       const { onFinish, onFinishFailed } = this.callback;
       cb && cb(res);
@@ -217,7 +221,7 @@ export default class FormStore<T extends Record<string, unknown> = {}> {
 }
 
 export function useForm<T extends Record<string, unknown>>(
-  form: FormStore<T>,
+  form?: FormStore<T>,
   defaultFormValue: T = {} as T
 ) {
   const formRef = useRef<FormStore<T> | null>(null);
