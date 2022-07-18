@@ -1,5 +1,5 @@
-import Swiper, { SwiperItem } from '../../packages/em-swiper/src';
-import '../../packages/em-swiper/style/index.less';
+import Swiper, { SwiperItem } from '../../packages/components/em-swiper/src';
+import '../../packages/components/em-swiper/style/index.less';
 import './index.less';
 function App() {
   return (
